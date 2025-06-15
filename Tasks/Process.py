@@ -2,6 +2,12 @@ import concurrent.futures
 
 
 def fib(n):
+    """
+        Вычисление чисел Фибоначчи
+
+        :param n: кол-во итераций
+        :return: итоговое число
+    """
     a, b = 0, 1
     for i in range (n):
         a, b = b, a + b
@@ -15,7 +21,7 @@ def main():
         results = list(executor.map(fib, numbers))
 
     for i, res in enumerate(results):
-        print(f"Result {i + 1}: {str(res)[:50]}...")
+        print(f"Результат {i + 1}: {str(res)[:50]}...")
 
 
 if __name__ == "__main__":

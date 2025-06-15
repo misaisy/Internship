@@ -4,6 +4,13 @@ import time
 
 
 async def download_url(session, url):
+    """
+        Асинхронная установка
+
+        :param session: HTTP-сессия
+        :param url: url для запросов
+        :return: текст ответа
+    """
     async with session.get(url) as response:
         content = await response.text()
         print(f"Установлено {url}, размер: {len(content)} байт")

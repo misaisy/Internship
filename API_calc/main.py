@@ -11,7 +11,7 @@ async def summarise(num1: float, num2: float):
         :param num1: первое слагаемое
         :param num2: второе слагаемое
         :return: результат сложения
-        """
+    """
     sum = num1 + num2
     return {
         "result": sum
@@ -20,11 +20,11 @@ async def summarise(num1: float, num2: float):
 @app.get("/calc/multiply")
 async def multiply(num1: float, num2: float) -> dict:
     """
-    Функция Умножения
+        Функция Умножения
 
-    :param num1: первый множитель
-    :param num2: второй множитель
-    :return: результат умножения
+        :param num1: первый множитель
+        :param num2: второй множитель
+        :return: результат умножения
     """
     multiply = num1 * num2
     return {
@@ -34,12 +34,12 @@ async def multiply(num1: float, num2: float) -> dict:
 @app.get("/calc/divide")
 async def divide(num1: float, num2: float):
     """
-        Функция Разделения
+        Функция Деления
 
-        :param num1: первое делимое
-        :param num2: второй делитель
-        :return: результат частное
-        """
+        :param num1: делимое
+        :param num2: делитель
+        :return: результат деления (частное)
+    """
     if num2 == 0:
         raise HTTPException(status_code = 422, detail="Нельзя делить на ноль!")
     divide = num1 / num2

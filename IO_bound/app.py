@@ -8,7 +8,12 @@ URL = "http://www.skuad-dev.nots-fns.ru/docs#/"
 REQUESTS = 100
 
 def sync_request(url):
-    """Синхронный запрос"""
+    """
+        Синхронный запрос
+
+        :param url: url для запросов
+        :return: код ответа или ошибка
+    """
     try:
         response = requests.get(url)
         return response.status_code
@@ -16,7 +21,13 @@ def sync_request(url):
         return str(e)
 
 async def async_request(session, url):
-    """Асинхронный запрос"""
+    """
+        Асинхронный запрос
+
+        :param session: экземпляр aiohttp.ClientSession для выполнения запросов
+        :param url: url для запросов
+        :return: код ответа или ошибка
+    """
     try:
         async with session.get(url) as response:
             return response.status_code
@@ -24,14 +35,22 @@ async def async_request(session, url):
         return str(e)
 
 def run_sync():
-    """Синхронный подход"""
+    """
+        Синхронный подход
+
+        :return: время выполнения
+    """
     start = time.time()
     for i in range(REQUESTS):
         sync_request(URL)
     return time.time() - start
 
 async def run_async():
-    """Асинхронный подход"""
+    """
+        Асинхронный подход
+
+        :return: время выполнения
+    """
     start = time.time()
     async with aiohttp.ClientSession() as session:
         tasks = [async_request(session, URL) for _ in range(REQUESTS)]
@@ -39,14 +58,22 @@ async def run_async():
     return time.time() - start
 
 def run_threaded():
-    """Многопоточный подход"""
+    """
+        Многопоточный подход
+
+        :return: время выполнения
+    """
     start = time.time()
     with ThreadPoolExecutor(max_workers=10) as executor:
         list(executor.map(sync_request, [URL] * REQUESTS))
     return time.time() - start
 
 def run_process():
-    """Многопроцессорный подход"""
+    """
+        Многопроцессорный подход
+
+        :return: время выполнения
+    """
     start = time.time()
     with ProcessPoolExecutor(max_workers=10) as executor:
         list(executor.map(sync_request, [URL] * REQUESTS))

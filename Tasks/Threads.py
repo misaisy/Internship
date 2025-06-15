@@ -4,6 +4,12 @@ import glob
 
 
 def count_words(file_path):
+    """
+        Обработка файла
+
+        :param file_path: путь к файлу
+        :return: кол-во слов в файле или текст ошибки
+    """
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             text = file.read()
@@ -11,17 +17,17 @@ def count_words(file_path):
             print(f"{os.path.basename(file_path)}: {word_count} words\n")
             return word_count
     except Exception as e:
-        print(f"Error processing {file_path}: {e}")
-        return 0
+        return str(e)
 
 
 def main():
     folder = "text_files"
     file_pattern = os.path.join(folder, "*.txt")
+    # Можно использовать pathlib (Path)
     files = glob.glob(file_pattern)
 
     if not files:
-        print("No files found!")
+        print("Файлы не найдены")
         return
 
     with concurrent.futures.ThreadPoolExecutor() as executor:

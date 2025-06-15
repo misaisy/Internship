@@ -4,41 +4,78 @@ import time
 import concurrent.futures
 import requests
 
+async def download_one(session, url):
+    """
+        Загрузка одного URL
+
+        :param session: HTTP-сессия aiohttp
+        :param url: URL-адрес
+        :return: статус или ошибка
+    """
+    try:
+        async with session.get(url) as response:
+            await response.read()
+            return response.status
+    except Exception as e:
+        return str(e)
 
 async def async_download(urls):
+    """
+        Асинхронный сбор
+
+        :param urls: массив URL-адресов
+        :return: время выполнения
+    """
+    start = time.perf_counter()
+
     async with aiohttp.ClientSession() as session:
-        tasks = [session.get(url) for url in urls]
+        tasks = [download_one(session, url) for url in urls]
         await asyncio.gather(*tasks)
 
+    async_time = time.perf_counter() - start
+    return async_time
 
 def thread_download(urls):
+    """
+        Многопоточный сбор
+
+        :param urls: массив URL-адресов
+        :return: время выполнения
+    """
+    start = time.perf_counter()
+
     with concurrent.futures.ThreadPoolExecutor() as executor:
         executor.map(requests.get, urls)
 
+    thread_time = time.perf_counter() - start
+
+    return thread_time
+
 
 def process_download(urls):
+    """
+        Многопроцессорный сбор
+
+        :param urls: массив URL-адресов
+        :return: время выполнения
+    """
+    start = time.perf_counter()
+
     with concurrent.futures.ProcessPoolExecutor() as executor:
         executor.map(requests.get, urls)
 
+    process_time = time.perf_counter() - start
+    return process_time
 
 def compare():
     urls = ["https://google.com"] * 50
 
-    start = time.perf_counter()
-    asyncio.run(async_download(urls))
-    async_time = time.perf_counter() - start
+    async_time = asyncio.run(async_download(urls))
+    print(f"Асинхронный: {async_time:.2f} sec")
 
-    start = time.perf_counter()
-    thread_download(urls)
-    thread_time = time.perf_counter() - start
+    print(f"Многопоточный: {thread_download(urls):.2f} sec")
 
-    start = time.perf_counter()
-    process_download(urls)
-    process_time = time.perf_counter() - start
-
-    print(f"Async: {async_time:.2f} sec")
-    print(f"Threads: {thread_time:.2f} sec")
-    print(f"Processes: {process_time:.2f} sec")
+    print(f"Многопроцессорный: {process_download(urls):.2f} sec")
 
 
 if __name__ == "__main__":

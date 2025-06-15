@@ -7,7 +7,12 @@ NUMBERS = list(range(1, 1001))
 
 
 def calculate_factorial(n):
-    """Вычисление факториала с использованием math.factorial"""
+    """
+        Вычисление факториала
+
+        :param n: число для вычисления
+        :return: результат вычисления
+    """
     result = 1
     for _ in range(1000):
         result = math.factorial(n)
@@ -15,7 +20,11 @@ def calculate_factorial(n):
 
 
 def run_sync():
-    """Синхронный подход"""
+    """
+        Синхронный подход
+
+        :return: время выполнения
+    """
     start = time.time()
     for n in NUMBERS:
         calculate_factorial(n)
@@ -23,7 +32,11 @@ def run_sync():
 
 
 def run_threaded():
-    """Многопоточный подход"""
+    """
+        Многопоточный подход
+
+        :return: время выполнения
+    """
     start = time.time()
     with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
         executor.map(calculate_factorial, NUMBERS)
@@ -31,7 +44,11 @@ def run_threaded():
 
 
 def run_process():
-    """Многопроцессорный подход"""
+    """
+        Многопроцессорный подход
+
+        :return: время выполнения
+    """
     start = time.time()
     with ProcessPoolExecutor(max_workers=os.cpu_count()) as executor:
         executor.map(calculate_factorial, NUMBERS)
