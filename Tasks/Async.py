@@ -1,15 +1,23 @@
+"""
+Модуль для асинхронной загрузки веб-страниц.
+
+Содержит функции:
+- download_url: асинхронная загрузка одного URL
+- main: основная функция для управления процессом загрузки
+"""
+
 import asyncio
-import aiohttp
 import time
+
+import aiohttp
 
 
 async def download_url(session, url):
-    """
-        Асинхронная установка
+    """Асинхронная загрузка одного URL.
 
-        :param session: HTTP-сессия
-        :param url: url для запросов
-        :return: текст ответа
+    :param session: HTTP-сессия
+    :param url: url для запросов
+    :return: текст ответа
     """
     async with session.get(url) as response:
         content = await response.text()
@@ -18,6 +26,7 @@ async def download_url(session, url):
 
 
 async def main():
+    """Управление процессом загрузки."""
     urls = ["https://google.com"] * 10
 
     start_time = time.perf_counter()

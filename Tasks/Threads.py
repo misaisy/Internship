@@ -1,14 +1,20 @@
+"""
+Модуль, обрабатывающий папку с текстовыми файлами в несколько потоков.
+
+Содержит функции:
+- count_words: обработка файла
+- main: основная функция для управления процессом обработки
+"""
 import concurrent.futures
-import os
 import glob
+import os
 
 
 def count_words(file_path):
-    """
-        Обработка файла
+    """Обработка файла.
 
-        :param file_path: путь к файлу
-        :return: кол-во слов в файле или текст ошибки
+    :param file_path: путь к файлу
+    :return: кол-во слов в файле или текст ошибки
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -21,6 +27,7 @@ def count_words(file_path):
 
 
 def main():
+    """Управление процессом обработки."""
     folder = "text_files"
     file_pattern = os.path.join(folder, "*.txt")
     # Можно использовать pathlib (Path)
@@ -32,6 +39,7 @@ def main():
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         executor.map(count_words, files)
+
 
 if __name__ == "__main__":
     main()

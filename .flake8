@@ -1,0 +1,30 @@
+[flake8]
+# Основные настройки
+max-line-length = 88
+# ignore = E203, W503     # Игнорировать спорные правила
+exclude = .git, __pycache__, venv, .venv
+# per-file-ignores =
+    __init__.py: D104    # Игнорировать отсутствие docstring в __init__.py
+
+# Плагины
+enable-extensions =
+    G,   # flake8-docstrings (D-коды)
+    I,   # flake8-import-order (I-коды)
+    B,   # flake8-bugbear (B-коды)
+    B90, # flake8-blind-except (B90x)
+    A,   # flake8-builtins (A00x)
+    LOG  # flake8-logging-format (Gxxx)
+
+# Настройка импортов
+# import-order-style =   # Группы: stdlib → сторонние → локальные
+# application-import-names = app, tasks  # Имена локальных модулей
+
+# Документация
+# docstring-convention =   # Стиль Google для docstring
+
+# Настройка встроенных имен (flake8-builtins)
+# builtins-ignorelist =
+  #  id,
+  #  filter,
+  #  map,
+  #  type
