@@ -21,7 +21,7 @@ async def download_url(session, url):
     """
     async with session.get(url) as response:
         content = await response.text()
-        print(f"Установлено {url}, размер: {len(content)} байт")
+        print("Установлено {}, размер: {} байт".format(url, len(content)))
         return content
 
 
@@ -37,6 +37,6 @@ async def main():
 
     end_time = time.perf_counter()
     total_time = end_time - start_time
-    print(f"Итоговое время: {total_time:2f} секунд")
+    print("Итоговое время: {:2f} секунд".format(total_time))
 
 asyncio.run(main())

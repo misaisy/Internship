@@ -64,10 +64,10 @@ def run_process():
 if __name__ == "__main__":
 
     sync_time = run_sync()
-    print(f"Синхронное выполнение: {sync_time:.4f} сек")
+    print("Синхронное выполнение: {:.4f} сек".format(sync_time))
 
     thread_time = run_threaded()
-    print(f"Многопоточное выполнение: {thread_time:.4f} сек")
+    print("Многопоточное выполнение: {:.4f} сек".format(thread_time))
 
     process_time = run_process()
-    print(f"Многопроцессорное выполнение: {process_time:.4f} сек")
+    print("Многопроцессорное выполнение: {:.4f} сек".format(process_time))

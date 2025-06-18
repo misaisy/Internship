@@ -28,7 +28,7 @@ def main():
         results = list(executor.map(fib, numbers))
 
     for i, res in enumerate(results):
-        print(f"Результат {i + 1}: {str(res)[:50]}...")
+        print("Результат {}: {}...".format(i + 1, str(res)[:50]))
 
 
 if __name__ == "__main__":

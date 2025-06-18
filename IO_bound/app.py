@@ -96,13 +96,13 @@ def run_process():
 
 if __name__ == "__main__":
     sync_time = run_sync()
-    print(f"Синхронное выполнение: {sync_time:.2f} сек")
+    print("Синхронное выполнение: {:.2f} сек".format(sync_time))
 
     async_time = asyncio.run(run_async())
-    print(f"Асинхронное выполнение: {async_time:.2f} сек")
+    print("Асинхронное выполнение: {:.2f} сек".format(async_time))
 
     thread_time = run_threaded()
-    print(f"Многопоточное выполнение: {thread_time:.2f} сек")
+    print("Многопоточное выполнение: {:.2f} сек".format(thread_time))
 
     process_time = run_process()
-    print(f"Многопроцессорное выполнение: {process_time:.2f} сек")
+    print("Многопроцессорное выполнение: {:.2f} сек".format(process_time))

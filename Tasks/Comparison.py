@@ -84,11 +84,11 @@ def compare():
     urls = ["https://google.com"] * 50
 
     async_time = asyncio.run(async_download(urls))
-    print(f"Асинхронный: {async_time:.2f} sec")
+    print("Асинхронный: {:.2f} секунд".format(async_time))
 
-    print(f"Многопоточный: {thread_download(urls):.2f} sec")
+    print("Многопоточный: {:.2f} секунд".format(thread_download(urls)))
 
-    print(f"Многопроцессорный: {process_download(urls):.2f} sec")
+    print("Многопроцессорный: {:.2f} секунд".format(process_download(urls)))
 
 
 if __name__ == "__main__":

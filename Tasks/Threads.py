@@ -20,7 +20,7 @@ def count_words(file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
             text = file.read()
             word_count = len(text.split())
-            print(f"{os.path.basename(file_path)}: {word_count} words\n")
+            print("{}: {} words".format(os.path.basename(file_path), word_count))
             return word_count
     except Exception as e:
         return str(e)
