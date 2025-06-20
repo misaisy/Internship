@@ -21,14 +21,13 @@ async def download_url(session, url):
     """
     async with session.get(url) as response:
         content = await response.text()
-        print("Установлено {}, размер: {} байт".format(url, len(content)))
+        # print("Установлено {}, размер: {} байт".format(url, len(content)))
         return content
 
 
 async def main():
     """Управление процессом загрузки."""
     urls = ["https://google.com"] * 10
-
     start_time = time.perf_counter()
 
     async with aiohttp.ClientSession() as session:

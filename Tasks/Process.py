@@ -5,6 +5,7 @@
 - count_words: обработка файла
 - main: основная функция для управления процессом обработки
 """
+
 import concurrent.futures
 
 

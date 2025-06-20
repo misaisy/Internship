@@ -8,6 +8,7 @@
 - process_download: многопроцессорный сбор
 - compare: сравнение способов сбора данных
 """
+
 import asyncio
 import concurrent.futures
 import time
