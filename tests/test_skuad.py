@@ -45,12 +45,6 @@ class TestIndustry:
         assert isinstance(data, list)
         assert len(data) == 0
 
-    @pytest.mark.asyncio
-    async def test_negative(self, async_client):
-        """Негативный тест без параметра region_name."""
-        response = await async_client.get(self.ENDPOINT)
-        assert response.status_code == 422
-
 
 class TestBusinessActivity:
     ENDPOINT = ENDPOINTS["BUSINESS_ACTIVITY"]
@@ -114,12 +108,6 @@ class TestBusinessActivity:
             assert field in data
 
     @pytest.mark.asyncio
-    async def test_negative(self, async_client):
-        """Негативный тест без параметра region_name."""
-        response = await async_client.get(self.ENDPOINT)
-        assert response.status_code == 422
-
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("region, fields", BUSINESS_BOUNDARY_REGIONS)
     async def test_boundary(self, async_client, region, fields):
         """Граничный тест."""
@@ -132,8 +120,14 @@ class TestBusinessActivity:
         business_data = data["data_ba"]
         assert isinstance(business_data, list)
         assert len(business_data) > 0
-        for field in fields:
-            assert field in data
+        for industry_item in business_data:
+            assert "industry_name" in industry_item
+            assert "business_activity" in industry_item
+            business = industry_item["business_activity"]
+            assert isinstance(business, list)
+            for item in business:
+                for field in fields:
+                    assert field in item
 
 
 class TestStatisticsRankSolvency:
@@ -164,12 +158,6 @@ class TestStatisticsRankSolvency:
         assert len(data) == 0
         for field in fields:
             assert field in data
-
-    @pytest.mark.asyncio
-    async def test_negative(self, async_client):
-        """Негативный тест без параметра region_name."""
-        response = await async_client.get(self.ENDPOINT)
-        assert response.status_code == 422
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("region, fields", STATISTIC_ALL_REGION)

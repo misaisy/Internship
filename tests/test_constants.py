@@ -49,7 +49,7 @@ BUSINESS_INVALID_REGIONS = [
 ]
 
 BUSINESS_BOUNDARY_REGIONS = [
-    ("all_regions", ["region_name", "data_ba"]),
+    ("all_regions", BUSINESS_PARAMS),
 ]
 
 STATISTIC_PARAMS = [
