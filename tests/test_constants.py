@@ -27,15 +27,24 @@ INDUSDTRY_INVALID_REGIONS = [
     (" ", [])
 ]
 
+BUSINESS_PARAMS = [
+    "id",
+    "value",
+    "key",
+    "name",
+    "dynamic",
+    "number_companies"
+]
+
 BUSINESS_VALID_REGIONS = [
-    ("Краснодарский край", ["region_name", "data_ba"]),
-    ("город Москва", ["region_name", "data_ba"]),
-    ("Свердловская область", ["region_name", "data_ba"])
+    ("Краснодарский край", "Деятельность по предоставлению прочих персональных услуг", BUSINESS_PARAMS),
+    ("город Москва", "", BUSINESS_PARAMS),
+    ("Свердловская область", "Деятельность административно-хозяйственная, вспомогательная деятельность по обеспечению функционирования организации, деятельность по предоставлению прочих вспомогательных услуг для бизнеса", BUSINESS_PARAMS)
 ]
 
 BUSINESS_INVALID_REGIONS = [
     ("0", ["region_name", "data_ba"]),
-    ("Несуществующий регион", []),
+    ("Несуществующий регион", ["region_name", "data_ba"]),
     (" ", ["region_name", "data_ba"])
 ]
 
@@ -67,9 +76,9 @@ STATISTIC_ALL_REGION = [
 ]
 
 LIMITS = [
-    "-1",
-    "0",
-    "2"
+    -1,
+    0,
+    2
 ]
 
 
@@ -78,3 +87,10 @@ ENDPOINTS = {
     "BUSINESS_ACTIVITY": "/api/squad-statement/region/business_activity/",
     "STATISTICS": "/api/squad-statement/region/statistics-rank-solvency/"
 }
+
+
+NEGATIVE_ENDPOINT = [
+    ENDPOINTS["INDUSTRY"],
+    ENDPOINTS["BUSINESS_ACTIVITY"],
+    ENDPOINTS["STATISTICS"]
+]
