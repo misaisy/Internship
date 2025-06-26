@@ -50,48 +50,38 @@ class TestBusinessActivity:
     ENDPOINT = ENDPOINTS["BUSINESS_ACTIVITY"]
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("region, industry, fields", BUSINESS_VALID_REGIONS)
-    async def test_positive(self, async_client, region, industry, fields):
+    @pytest.mark.parametrize("region, industry, fields, expected_values", BUSINESS_VALID_REGIONS)
+    async def test_positive(self, async_client, region, industry, fields, expected_values):
         """Позитивный тест."""
-        if industry != "":
-            params = {"region_name": region, "industry_name": industry}
-            response = await async_client.get(self.ENDPOINT, params=params)
-            assert response.status_code == 200
-            data = response.json()
-            assert isinstance(data, dict)
-            assert "region_name" in data
-            business_data = data["data_ba"]
-            assert isinstance(business_data, list)
-            assert len(business_data) > 0
-            for industry_item in business_data:
-                assert "industry_name" in industry_item
-                assert "business_activity" in industry_item
-                business = industry_item["business_activity"]
-                assert isinstance(business, list)
-                assert len(business) > 0
-                for item in business:
-                    for field in fields:
-                        assert field in item
-        else:
-            params = {"region_name": region}
-            response = await async_client.get(self.ENDPOINT, params=params)
-            assert response.status_code == 200
-            data = response.json()
-            assert isinstance(data, dict)
-            assert "region_name" in data
-            business_data = data["data_ba"]
-            assert isinstance(business_data, list)
-            assert len(business_data) > 0
-            for industry_item in business_data:
-                assert "industry_name" in industry_item
-                assert "business_activity" in industry_item
-                business = industry_item["business_activity"]
-                assert isinstance(business, list)
-                assert len(business) > 0
-                for item in business:
-                    for field in fields:
-                        assert field in item
+        params = {"region_name": region, "industry_name": industry}
+        response = await async_client.get(self.ENDPOINT, params=params)
+        assert response.status_code == 200
 
+        data = response.json()
+        assert isinstance(data, dict)
+        assert "region_name" in data
+
+        business_data = data["data_ba"]
+        assert isinstance(business_data, list)
+        assert len(business_data) > 0
+
+        target_industry = next(item for item in business_data if item["industry_name"] == industry)
+        assert target_industry is not None
+
+        business_activities = target_industry["business_activity"]
+        assert isinstance(business_activities, list)
+        assert len(business_activities) > 0
+
+        if region == "Краснодарский край" and industry == "Деятельность административно-хозяйственная, вспомогательная деятельность по обеспечению функционирования организации, деятельность по предоставлению прочих вспомогательных услуг для бизнеса":
+            target_id = expected_values.get("id")
+            target_item = next(item for item in business_activities if item["id"] == target_id)
+            assert target_item is not None
+            for field, expected_value in expected_values.items():
+                assert target_item[field] == expected_value
+
+        for item in business_activities:
+            for field in fields:
+                assert field in item
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("region, fields", BUSINESS_INVALID_REGIONS)
